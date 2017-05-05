@@ -1,27 +1,14 @@
-cmake_minimum_required(VERSION 2.6)
+# macro(add_new_test name)
+#     add_executable(${name}_test ${name}.cpp)
+#     add_dependencies(${name}_test googletest)
+#     target_link_libraries(${name}_test confuse++ confuse gtest gtest_main pthread)
+#     add_test(NAME ${name} COMMAND ${name}_test)
+# endmacro(add_new_test)
 
-project(<project_name> CXX)
+file(GLOB_RECURSE test_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
 
-option(BUILDING_TEST "Build tests" ON)
+add_executable(libconfusecpp_test ${test_SOURCES})
+target_link_libraries(libconfusecpp_test confuse++ confuse gtest gtest_main pthread)
 
-add_definitions(--std=c++1y)
-add_definitions(-Wall)
-add_definitions(-Wextra)
-add_definitions(-g)
+# add_new_test(ConfigFileTest)
 
-file(GLOB_RECURSE SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
-
-# add dependencies
-# include(CMakeLists-libconfuse.cmake)
-
-# add output library
-add_library(confuse++ ${SOURCES})
-
-# add_dependencies(confuse++ libconfuse)
-
-if(BUILDING_TEST)
-    enable_testing()
-    include(CMakeLists-googletest.cmake)
-    add_subdirectory(test)
-endif()
