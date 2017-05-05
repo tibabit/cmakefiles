@@ -1,0 +1,9 @@
+# !/bin/sh
+
+mkdir -p bin || exit 1
+cd bin || exit 1
+cmake .. || exit 1
+make || exit 1
+ctest || exit 1
+
+exit 0
